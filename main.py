@@ -85,30 +85,29 @@ class random_IGN_Create(QMainWindow):
         self.lineedit1.setValidator(QIntValidator())
 
     def run_ran(self):
-        try:
-            if self.lineedit1:
-                digit = int(self.lineedit1.text())
-                if digit <= 0 or digit > 32:
-                    QMessageBox.warning(self, '입력 값 오류', '입력 된 자릿 수를 확인해 주세요.\n'
-                                                         '입력 가능한 자릿 수 : 1 ~ 32')
-                else:
-                    selected_cho_list = []
-                    selected_jung_list = []
-                    selected_jong_list = []
-                    for button in self.cho_list:
-                        if button.isChecked():
-                            selected_cho_list.append(button.text())
-                    for button in self.jung_list:
-                        if button.isChecked():
-                            selected_jung_list.append(button.text())
-                    for button in self.jong_list:
-                        if button.isChecked():
-                            selected_jong_list.append(button.text())
-                    show_dialog = create_Random_IGN(selected_cho_list, selected_jung_list, selected_jong_list)
+        if self.lineedit1:
+            digit = int(self.lineedit1.text())
+            if digit <= 0 or digit > 32:
+                QMessageBox.warning(self, '입력 값 오류', '입력 된 자릿 수를 확인해 주세요.\n'
+                                                     '입력 가능한 자릿 수 : 1 ~ 32')
+            else:
+                selected_cho_list = []
+                selected_jung_list = []
+                selected_jong_list = []
+                for button in self.cho_list:
+                    if button.isChecked():
+                        selected_cho_list.append(button.text())
+                for button in self.jung_list:
+                    if button.isChecked():
+                        selected_jung_list.append(button.text())
+                for button in self.jong_list:
+                    if button.isChecked():
+                        selected_jong_list.append(button.text())
+                if selected_cho_list and selected_jung_list:
+                    show_dialog = create_Random_IGN(selected_cho_list, selected_jung_list, selected_jong_list, digit)
                     show_dialog.exec()
-        except Exception as e:
-            print(e)
-
+                else:
+                    QMessageBox.warning(self, '경고', '윗 자음 및 모음은 필수로 선택해 주어야 합니다.')
 
 if __name__ == '__main__':
     app = QApplication([])
