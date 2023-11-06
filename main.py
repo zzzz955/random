@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QFrame, QLabel, \
-    QPushButton, QGridLayout, QMessageBox
+    QPushButton, QGridLayout, QMessageBox, QLineEdit, QHBoxLayout
+from PyQt5.Qt import QIntValidator, Qt
 from qt_material import apply_stylesheet
+import random_ign
 
 
 class random_IGN_Create(QMainWindow):
@@ -19,6 +21,8 @@ class random_IGN_Create(QMainWindow):
         label1 = QLabel("<b>윗 자음 선택</b>")
         label2 = QLabel("<b>모음 선택</b>")
         label3 = QLabel("<b>아랫 자음 선택</b>")
+        label4 = QLabel('<b>자릿수 지정 : </b>')
+        self.lineedit1 = QLineEdit()
         self.do_ran = QPushButton('닉네임 추출 시작')
 
         self.exit_button = QPushButton("종료")
@@ -30,6 +34,7 @@ class random_IGN_Create(QMainWindow):
         frame1_gridlayout = QGridLayout()
         frame2_gridlayout = QGridLayout()
         frame3_gridlayout = QGridLayout()
+        hlayout1 = QHBoxLayout()
         layout.addWidget(label1)
         layout.addWidget(frame1)
         frame1.setLayout(frame1_gridlayout)
@@ -65,9 +70,30 @@ class random_IGN_Create(QMainWindow):
                 frame3_gridlayout.addWidget(self.jong_button, i, j)
                 self.jong_button.setCheckable(True)
                 self.selected_jong.append(self.jong_button)
+
+        layout.addLayout(hlayout1)
+        hlayout1.addWidget(label4)
+        hlayout1.addWidget(self.lineedit1)
+        hlayout1.addWidget(self.do_ran)
         layout.addWidget(self.exit_button)
 
         # 시그널 세팅
+        self.do_ran.clicked.connect(self.run_ran)
+        self.exit_button.clicked.connect(self.close)
+
+        # 위젯 제약
+        label4.setAlignment(Qt.AlignCenter)
+        self.lineedit1.setValidator(QIntValidator())
+
+    def run_ran(self):
+        try:
+            if self.lineedit1:
+                digit = int(self.lineedit1.text())
+                if digit <= 0 or digit > 32:
+                    QMessageBox.warning(self, '입력 값 오류', '입력 된 자릿 수를 확인해 주세요.\n'
+                                                         '입력 가능한 자릿 수 : 1 ~ 32')
+        except Exception as e:
+            print(e)
 
 
 if __name__ == '__main__':
