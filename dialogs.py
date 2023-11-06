@@ -42,6 +42,12 @@ class create_Random_IGN(QDialog):
                 QMessageBox.warning(self, '입력 값 오류', '입력 된 실행 횟수를 확인해 주세요.\n'
                                                      '입력 가능한 실행 횟수 : 1 ~ 20')
             else:
+                for i in reversed(range(self.glayout1.count())):
+                    item = self.glayout1.itemAt(i)
+                    if item.widget():
+                        item.widget().deleteLater()
+                    else:
+                        self.glayout1.removeItem(item)
                 for i in range(1, nums + 1):
                     nick_name = QLabel()
                     nick_name.setText(ra.create_random_ign(cho, jung, jong, digit))
