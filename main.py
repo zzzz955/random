@@ -28,6 +28,12 @@ class random_IGN_Create(QMainWindow):
         self.cho_list = []
         self.jung_list = []
         self.jong_list = []
+        self.button3 = QPushButton('전체 체크')
+        self.button4 = QPushButton('전체 체크 해제')
+        self.button5 = QPushButton('전체 체크')
+        self.button6 = QPushButton('전체 체크 해제')
+        self.button7 = QPushButton('전체 체크')
+        self.button8 = QPushButton('전체 체크 해제')
 
         # 레이아웃 세팅
         frame1_gridlayout = QGridLayout()
@@ -45,6 +51,8 @@ class random_IGN_Create(QMainWindow):
                 frame1_gridlayout.addWidget(self.cho_button, i, j)
                 self.cho_button.setCheckable(True)
                 self.cho_list.append(self.cho_button)
+        frame1_gridlayout.addWidget(self.button3, 0, 7)
+        frame1_gridlayout.addWidget(self.button4, 1, 7)
 
         layout.addWidget(label2)
         layout.addWidget(frame2)
@@ -57,6 +65,8 @@ class random_IGN_Create(QMainWindow):
                 frame2_gridlayout.addWidget(self.jung_button, i, j)
                 self.jung_button.setCheckable(True)
                 self.jung_list.append(self.jung_button)
+        frame2_gridlayout.addWidget(self.button5, 0, 7)
+        frame2_gridlayout.addWidget(self.button6, 1, 7)
 
         layout.addWidget(label3)
         layout.addWidget(frame3)
@@ -69,6 +79,8 @@ class random_IGN_Create(QMainWindow):
                 frame3_gridlayout.addWidget(self.jong_button, i, j)
                 self.jong_button.setCheckable(True)
                 self.jong_list.append(self.jong_button)
+        frame3_gridlayout.addWidget(self.button7, 0, 7)
+        frame3_gridlayout.addWidget(self.button8, 1, 7)
 
         layout.addLayout(hlayout1)
         hlayout1.addWidget(label4)
@@ -79,6 +91,12 @@ class random_IGN_Create(QMainWindow):
         # 시그널 세팅
         self.button1.clicked.connect(self.run_ran)
         self.button2.clicked.connect(self.close)
+        self.button3.clicked.connect(lambda: self.check_all(self.cho_list))
+        self.button4.clicked.connect(lambda: self.uncheck_all(self.cho_list))
+        self.button5.clicked.connect(lambda: self.check_all(self.jung_list))
+        self.button6.clicked.connect(lambda: self.uncheck_all(self.jung_list))
+        self.button7.clicked.connect(lambda: self.check_all(self.jong_list))
+        self.button8.clicked.connect(lambda: self.uncheck_all(self.jong_list))
 
         # 위젯 제약
         label4.setAlignment(Qt.AlignCenter)
@@ -108,6 +126,14 @@ class random_IGN_Create(QMainWindow):
                     show_dialog.exec()
                 else:
                     QMessageBox.warning(self, '경고', '윗 자음 및 모음은 필수로 선택해 주어야 합니다.')
+
+    def check_all(self, target):
+        for button in target:
+            button.setChecked(True)
+
+    def uncheck_all(self, target):
+        for button in target:
+            button.setChecked(False)
 
 if __name__ == '__main__':
     app = QApplication([])
