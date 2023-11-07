@@ -5,6 +5,16 @@ from qt_material import apply_stylesheet
 from dialogs import create_Random_IGN
 
 
+def check_all(target):
+    for button in target:
+        button.setChecked(True)
+
+
+def uncheck_all(target):
+    for button in target:
+        button.setChecked(False)
+
+
 class random_IGN_Create(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -91,12 +101,12 @@ class random_IGN_Create(QMainWindow):
         # 시그널 세팅
         self.button1.clicked.connect(self.run_ran)
         self.button2.clicked.connect(self.close)
-        self.button3.clicked.connect(lambda: self.check_all(self.cho_list))
-        self.button4.clicked.connect(lambda: self.uncheck_all(self.cho_list))
-        self.button5.clicked.connect(lambda: self.check_all(self.jung_list))
-        self.button6.clicked.connect(lambda: self.uncheck_all(self.jung_list))
-        self.button7.clicked.connect(lambda: self.check_all(self.jong_list))
-        self.button8.clicked.connect(lambda: self.uncheck_all(self.jong_list))
+        self.button3.clicked.connect(lambda: check_all(self.cho_list))
+        self.button4.clicked.connect(lambda: uncheck_all(self.cho_list))
+        self.button5.clicked.connect(lambda: check_all(self.jung_list))
+        self.button6.clicked.connect(lambda: uncheck_all(self.jung_list))
+        self.button7.clicked.connect(lambda: check_all(self.jong_list))
+        self.button8.clicked.connect(lambda: uncheck_all(self.jong_list))
 
         # 위젯 제약
         label4.setAlignment(Qt.AlignCenter)
@@ -127,13 +137,6 @@ class random_IGN_Create(QMainWindow):
                 else:
                     QMessageBox.warning(self, '경고', '윗 자음 및 모음은 필수로 선택해 주어야 합니다.')
 
-    def check_all(self, target):
-        for button in target:
-            button.setChecked(True)
-
-    def uncheck_all(self, target):
-        for button in target:
-            button.setChecked(False)
 
 if __name__ == '__main__':
     app = QApplication([])
